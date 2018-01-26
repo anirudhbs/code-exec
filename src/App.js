@@ -8,7 +8,7 @@ class App extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      code: '// Code goes here\n',
+      code: '// Code goes here',
       flag: false
     }
   }

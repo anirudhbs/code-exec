@@ -7,3 +7,12 @@
 .file {
   padding: 10px;
 }
+
+.header {
+  margin: 0 auto;
+  font-size: 32px;
+}
+
+.result{
+  margin-top: 20px;
+}

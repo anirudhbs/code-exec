@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import '../App.css'
-import { Label } from 'react-bootstrap'
 
 const compose = (f, g) => x => f(g(x))
 
@@ -70,7 +69,7 @@ class FileUpload extends Component {
   render () {
     return (
       <div>
-        <Label>Choose an image</Label>
+        <label>Choose an image</label>
         <input className='file' type='file' name='image_upload' accept='.jpg, .jpeg, .png' onChange={this.fileUpload.bind(this)} />
       </div>
     )
