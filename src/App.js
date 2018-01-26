@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
 import './App.css'
+import TextEditor from './Components/TextEditor'
 
 class App extends Component {
   render () {
     return (
       <div className='App'>
-        Hello world
+        <TextEditor />
       </div>
     )
   }
