@@ -6,7 +6,7 @@ class TextEditor extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      code: '// code goes here\n'
+      code: this.props.code
     }
   }
 
@@ -15,7 +15,7 @@ class TextEditor extends Component {
   }
 
   onChange (editor, value) {
-    console.log('controlled', {value})
+    // do something
   }
 
   onSubmit () {
