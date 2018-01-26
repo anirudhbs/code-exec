@@ -28,9 +28,7 @@ class TextEditor extends Component {
     fetch(url + '/upload', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, PUT'
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({ code: code })
     })

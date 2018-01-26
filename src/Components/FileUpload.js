@@ -31,7 +31,6 @@ class FileUpload extends Component {
     .then(result => {
       console.log('code', result.text)
       this.props.setCode(result.text)
-      // makeAPICall(result.text)
     })
   }
 
