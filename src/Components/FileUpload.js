@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import '../App.css'
+import { Label } from 'react-bootstrap'
+
 const Tesseract = window.Tesseract
 
 class FileUpload extends Component {
@@ -37,8 +39,8 @@ class FileUpload extends Component {
   render () {
     return (
       <div>
-        <label>Choose an image</label>
-        <input type='file' name='image_upload' accept='.jpg, .jpeg, .png' onChange={this.fileUpload.bind(this)} />
+        <Label>Choose an image</Label>
+        <input className='file' type='file' name='image_upload' accept='.jpg, .jpeg, .png' onChange={this.fileUpload.bind(this)} />
       </div>
     )
   }
