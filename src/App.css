@@ -16,3 +16,12 @@
 .result{
   margin-top: 20px;
 }
+
+
+.editor {
+  border: 1px solid black;
+}
+
+.fileUpload {
+  border: 1px solid black;
+}

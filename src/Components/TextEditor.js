@@ -55,7 +55,7 @@ class TextEditor extends Component {
   render () {
     const options = {}
     return (
-      <div>
+      <div className='editor'>
         <select value={this.state.lang} onChange={this.onChangeLanguage.bind(this)}>
           <option value='clojure'>Clojure</option>
           <option value='javascript'>Javascript</option>

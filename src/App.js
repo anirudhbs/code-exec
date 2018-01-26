@@ -24,8 +24,8 @@ class App extends Component {
     return (
       <div className='App'>
         <Header />
-        {(!this.state.flag) && <FileUpload setCode={this.setCode.bind(this)} />}
-        {(this.state.flag) && <TextEditor code={code} />}
+        <FileUpload setCode={this.setCode.bind(this)} />
+        <TextEditor code={code} />
       </div>
     )
   }

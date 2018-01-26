@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import '../App.css'
+const video = window.video
 
 const compose = (f, g) => x => f(g(x))
 
@@ -11,16 +12,61 @@ class FileUpload extends Component {
     }
   }
 
-  async fileUpload () {
-    let file = document.querySelector('input[type=file]').files[0]
+  componentDidMount () {
+    const video = document.getElementById('video')
+    video.addEventListener('click', this.takeSnapshot.bind(this))
+
+    if (navigator.mediaDevices) {
+      navigator.mediaDevices.getUserMedia({ video: true })
+      .then(function (stream) {
+        video.src = window.URL.createObjectURL(stream)
+      })
+      .catch((err) => {
+        console.error('camera error: ' + err.name)
+      })
+    }
+  }
+
+  takeSnapshot () {
+    const video = document.getElementById('video')
+    const image = document.getElementById('myImg')
+    const width = video.offsetWidth
+    const height = video.offsetHeight
+
+    const canvas = document.createElement('canvas')
+    canvas.width = width
+    canvas.height = height
+
+    const context = canvas.getContext('2d')
+    context.drawImage(video, 0, 0, width, height)
+    image.src = canvas.toDataURL('image/png')
+    image.alt = 'capture'
+    video.style.display = 'none'
+    this.fileUpload(canvas)
+  }
+
+  async fileUpload (canvas) {
+    let file = document.querySelector('input[type=file]').files[0] || canvas.toDataURL('image/png')
+    const image = document.getElementById('myImg')
+    const video = document.getElementById('video')
+    video.style.display = 'none'
+    image.src = file
     let base64File = await this.getBase64(file)
     let data = await compose(this.callVisionApi, this.createBodyAndKey)(base64File)
-    let res = this.getResponse(data)
-    this.props.setCode(res)
+    try {
+      let res = this.getResponse(data)
+      this.props.setCode(res)
+    } catch (err) {
+      console.error(err)
+    }
   }
 
   getResponse (data) {
-    return data.responses[0].fullTextAnnotation.text
+    try {
+      return data.responses[0].fullTextAnnotation.text
+    } catch (err) {
+      throw new Error('Invalid Input') || err
+    }
   }
 
   createBodyAndKey (file) {
@@ -53,10 +99,14 @@ class FileUpload extends Component {
 
   getBase64 (file) {
     return new Promise((resolve, reject) => {
-      const reader = new FileReader()
-      reader.readAsDataURL(file)
-      reader.onload = () => resolve(reader.result)
-      reader.onerror = error => reject(error)
+      if (typeof file !== 'object' && file.startsWith('data:image/png;base64,')) {
+        resolve(file)
+      } else {
+        const reader = new FileReader()
+        reader.readAsDataURL(file)
+        reader.onload = () => resolve(reader.result)
+        reader.onerror = error => reject(error)
+      }
     })
   }
 
@@ -68,9 +118,14 @@ class FileUpload extends Component {
 
   render () {
     return (
-      <div>
+      <div className='fileUpload'>
         <label>Choose an image</label>
         <input className='file' type='file' name='image_upload' accept='.jpg, .jpeg, .png' onChange={this.fileUpload.bind(this)} />
+        <div>
+          <label> Capture an image</label>
+          <video id='video' autoPlay />
+        </div>
+        <img id='myImg' />
       </div>
     )
   }
