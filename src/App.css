@@ -1,6 +1,9 @@
 .App {
-  /* text-align: center; */
-  /* margin: 0 auto; */
+  margin: 0 auto;
   width: 960px;
   padding: 20px;
+}
+
+.file {
+  padding: 10px;
 }

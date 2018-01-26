@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './App.css'
 import TextEditor from './Components/TextEditor'
 import FileUpload from './Components/FileUpload'
+import Header from './Components/Header'
 
 class App extends Component {
   constructor (props) {
@@ -22,7 +23,8 @@ class App extends Component {
     const { code } = this.state
     return (
       <div className='App'>
-        <FileUpload setCode={this.setCode.bind(this)} />
+        <Header />
+        {(!this.state.flag) && <FileUpload setCode={this.setCode.bind(this)} />}
         {(this.state.flag) && <TextEditor code={code} />}
       </div>
     )

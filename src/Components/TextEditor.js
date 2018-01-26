@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import '../App.css'
 import { Controlled as CodeMirror } from 'react-codemirror2'
+import { Button } from 'react-bootstrap'
+
+require('codemirror/mode/xml/xml')
+require('codemirror/mode/javascript/javascript')
 
 class TextEditor extends Component {
   constructor (props) {
@@ -16,6 +20,7 @@ class TextEditor extends Component {
 
   onChange (editor, value) {
     // do something
+    // this.setState({code: value})
   }
 
   onSubmit () {
@@ -42,12 +47,12 @@ class TextEditor extends Component {
   }
 
   render () {
-    const options = null
+    const options = {}
     return (
       <div>
         <CodeMirror value={this.state.code} options={options} onBeforeChange={this.onBeforeChange.bind(this)}
           onChange={this.onChange.bind(this)} />
-        <button onClick={this.onSubmit.bind(this)}>Submit</button>
+        <Button onClick={this.onSubmit.bind(this)} bsStyle='primary'>Evaluate</Button>
       </div>
     )
   }
