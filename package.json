@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "codemirror": "^5.33.0",
     "react": "^16.2.0",
     "react-codemirror2": "^3.0.7",
     "react-dom": "^16.2.0",
