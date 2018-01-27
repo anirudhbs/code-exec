@@ -1,29 +1,13 @@
 import React, { Component } from 'react'
 import '../App.css'
 
-const video = window.video
 const compose = (f, g) => x => f(g(x))
 
 class FileUpload extends Component {
   constructor (props) {
     super(props)
     this.state = {
-      placeholder: null
-    }
-  }
-
-  componentDidMount () {
-    const video = document.getElementById('video')
-    video.addEventListener('click', this.takeSnapshot.bind(this))
-
-    if (navigator.mediaDevices) {
-      navigator.mediaDevices.getUserMedia({ video: true })
-      .then(function (stream) {
-        video.src = window.URL.createObjectURL(stream)
-      })
-      .catch((err) => {
-        console.error('camera error: ' + err.name)
-      })
+      filename: ''
     }
   }
 
@@ -40,6 +24,7 @@ class FileUpload extends Component {
     const context = canvas.getContext('2d')
     context.drawImage(video, 0, 0, width, height)
     image.src = canvas.toDataURL('image/png')
+    image.width = '960px'
     image.alt = 'capture'
     video.style.display = 'none'
     this.fileUpload(canvas)
@@ -113,20 +98,45 @@ class FileUpload extends Component {
   async callVisionApi ([obj, key]) {
     let data = await fetch(`https://vision.googleapis.com/v1/images:annotate?key=${key}`, obj)
     let dataJSON = await data.json()
-    console.log('d', dataJSON)
     return dataJSON
+  }
+
+  onNameChange (event) {
+    this.setState({filename: event.target.value})
+  }
+
+  onNameSubmit () {
+    const url = 'http://192.168.0.106:4000'
+    fetch(url + '/files/' + this.state.filename, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT'
+      }
+    })
+    .then((results) => results.json())
+    .then((data) => {
+      if (data.status === 'success') {
+        this.props.setCode(data.content)
+      }
+    })
+    .catch(function (error) {
+      console.log('fail', error)
+    })
   }
 
   render () {
     return (
       <div className='fileUpload'>
         <label>Choose an image</label>
-        <input className='file' type='file' name='image_upload' accept='.jpg, .jpeg, .png' onChange={this.fileUpload.bind(this)} />
+        <input id='image_upload' className='file' type='file'
+          name='image_upload' accept='.jpg, .jpeg, .png' onChange={this.fileUpload.bind(this)} />
         <div>
-          {/* <label> Capture an image</label> */}
-          <video id='video' autoPlay style={{display: 'none'}} />
+          <input type='text' value={this.state.filename} onChange={this.onNameChange.bind(this)} 
+            placeholder='Enter file name' />
+          <button onClick={this.onNameSubmit.bind(this)}>Submit</button>
         </div>
-        <img id='myImg' />
+        <img id='myImg' alt='' width='960px' />
       </div>
     )
   }

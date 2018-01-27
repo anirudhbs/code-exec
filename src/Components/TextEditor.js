@@ -10,7 +10,7 @@ class TextEditor extends Component {
       code: this.props.code,
       lang: 'clojure',
       flag: false,
-      result: null,
+      result: '-',
       error: null
     }
   }
@@ -20,7 +20,7 @@ class TextEditor extends Component {
   }
 
   onChange (editor, data, value) {
-    // this.setState({code: value})
+    // do something
   }
 
   onSubmit () {
@@ -41,9 +41,8 @@ class TextEditor extends Component {
     })
     .then((results) => results.json())
     .then((data) => {
-      console.log(data)
       if (data.status === 'success') {
-        this.setState({ flag: true, result: data.result })
+        this.setState({ flag: true, result: data.result, filename: data.fid})
       } else {
         this.setState({ flag: false, error: data.error })
       }
@@ -54,7 +53,6 @@ class TextEditor extends Component {
   }
 
   onChangeLanguage (event) {
-    console.log(event.target.value)
     this.setState({lang: event.target.value})
   }
 
@@ -71,7 +69,7 @@ class TextEditor extends Component {
           onChange={this.onChange.bind(this)} />
         <Button onClick={this.onSubmit.bind(this)} bsStyle='success'>Evaluate</Button>
         <div className='result'>
-          {(this.state.flag) && <div>Result: {this.state.result}</div>}
+          {(this.state.flag) && <div>Filename: {this.state.filename}, Result: {this.state.result}</div>}
           {(!this.state.flag) && <div>{this.state.error}</div>}
         </div>
       </div>

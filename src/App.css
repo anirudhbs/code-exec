@@ -23,11 +23,12 @@
   padding: 10px;
 }
 
-.fileUpload {
-  /* border: 1px solid black; */
-}
 
 button {
-  /* padding-left: 20px; */
   margin-left: 40px;
+}
+
+img {
+  max-width: 960px;
+  padding-right: 38px;
 }
