@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import '../App.css'
 import { Controlled as CodeMirror } from 'react-codemirror2'
+import { Button, DropdownButton, MenuItem } from 'react-bootstrap'
 
 class TextEditor extends Component {
   constructor (props) {
@@ -56,13 +57,19 @@ class TextEditor extends Component {
     const options = {}
     return (
       <div className='editor'>
-        <select value={this.state.lang} onChange={this.onChangeLanguage.bind(this)}>
+        <select className='btn btn-outline-primary' value={this.state.lang} onChange={this.onChangeLanguage.bind(this)}>
           <option value='clojure'>Clojure</option>
-          <option value='javascript'>Javascript</option>
+          <option value='python'>Python</option>
+          <option value='clisp'>Lisp</option>
         </select>
+        {/* <DropdownButton bsStyle='Primary' title={this.state.lang} onChange={this.onChangeLanguage.bind(this)}>
+          <MenuItem value='clojure'>Clojure</MenuItem>
+          <MenuItem value='python'>Python</MenuItem>
+          <MenuItem value='clisp'>Lisp</MenuItem>
+        </DropdownButton> */}
         <CodeMirror value={this.state.code} options={options} onBeforeChange={this.onBeforeChange.bind(this)}
           onChange={this.onChange.bind(this)} />
-        <button onClick={this.onSubmit.bind(this)}>Evaluate</button>
+        <Button onClick={this.onSubmit.bind(this)} bsStyle='success'>Evaluate</Button>
         <div className='result'>
           {(this.state.flag) && <div>Result: {this.state.result}</div>}
         </div>

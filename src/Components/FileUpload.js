@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import '../App.css'
-const video = window.video
 
+const video = window.video
 const compose = (f, g) => x => f(g(x))
 
 class FileUpload extends Component {
