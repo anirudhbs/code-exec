@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import '../App.css'
 import { Controlled as CodeMirror } from 'react-codemirror2'
-import { Button, DropdownButton, MenuItem } from 'react-bootstrap'
+import { Button } from 'react-bootstrap'
 
 class TextEditor extends Component {
   constructor (props) {
