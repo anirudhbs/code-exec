@@ -20,7 +20,7 @@ class TextEditor extends Component {
   }
 
   onChange (editor, data, value) {
-    // do something
+    // todo: do something
   }
 
   onSubmit () {
@@ -37,19 +37,29 @@ class TextEditor extends Component {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, POST, PUT'
       },
-      body: JSON.stringify({ code: code, lang: this.state.lang })
+      body: JSON.stringify({
+        code: code,
+        lang: this.state.lang
+      })
     })
-    .then((results) => results.json())
-    .then((data) => {
-      if (data.status === 'success') {
-        this.setState({ flag: true, result: data.result, filename: data.fid})
-      } else {
-        this.setState({ flag: false, error: data.error })
-      }
-    })
-    .catch(function (error) {
-      console.log('fail', error)
-    })
+      .then((results) => results.json())
+      .then((data) => {
+        if (data.status === 'success') {
+          this.setState({
+            flag: true,
+            result: data.result,
+            filename: data.fid
+          })
+        } else {
+          this.setState({
+            flag: false,
+            error: data.error
+          })
+        }
+      })
+      .catch(function (error) {
+        console.log('fail', error)
+      })
   }
 
   onChangeLanguage (event) {

@@ -17,9 +17,9 @@ class App extends Component {
   }
 
   setCode (code) {
-    console.log('c', code)
-    this.setState({ code })
-    this.setState({flag: true})
+    this.setState({ code,
+      flag: true
+    })
   }
 
   render () {
