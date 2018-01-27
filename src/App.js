@@ -4,6 +4,9 @@ import TextEditor from './Components/TextEditor'
 import FileUpload from './Components/FileUpload'
 import Header from './Components/Header'
 
+require('codemirror/lib/codemirror.css')
+require('codemirror/mode/clojure/clojure')
+
 class App extends Component {
   constructor (props) {
     super(props)
@@ -25,7 +28,7 @@ class App extends Component {
       <div className='App'>
         <Header />
         <FileUpload setCode={this.setCode.bind(this)} />
-        <TextEditor code={code} />
+        {(this.state.flag) && <TextEditor code={code} />}
       </div>
     )
   }
