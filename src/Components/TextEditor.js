@@ -36,13 +36,14 @@ class TextEditor extends Component {
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'GET, POST, PUT'
       },
-      body: JSON.stringify({ code: code, lang: 'clojure' })
+      body: JSON.stringify({ code: code, lang: this.state.lang })
     })
     .then((results) => results.json())
     .then((data) => {
       console.log(data)
-      if (data.status === 'success')
-      this.setState({ flag: true, result: data.result })
+      if (data.status === 'success'){
+        this.setState({ flag: true, result: data.result })
+      }
     })
     .catch(function (error) {
       console.log('fail', error)
@@ -50,6 +51,7 @@ class TextEditor extends Component {
   }
 
   onChangeLanguage (event) {
+    console.log(event.target.value)
     this.setState({lang: event.target.value})
   }
 

@@ -114,6 +114,7 @@ class FileUpload extends Component {
   async callVisionApi ([obj, key]) {
     let data = await fetch(`https://vision.googleapis.com/v1/images:annotate?key=${key}`, obj)
     let dataJSON = await data.json()
+    console.log('d', dataJSON)
     return dataJSON
   }
 
@@ -123,8 +124,8 @@ class FileUpload extends Component {
         <label>Choose an image</label>
         <input className='file' type='file' name='image_upload' accept='.jpg, .jpeg, .png' onChange={this.fileUpload.bind(this)} />
         <div>
-          <label> Capture an image</label>
-          <video id='video' autoPlay />
+          {/* <label> Capture an image</label> */}
+          <video id='video' autoPlay style={{display: 'none'}} />
         </div>
         <img id='myImg' />
       </div>
