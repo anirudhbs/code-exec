@@ -50,10 +50,9 @@ class FileUpload extends Component {
     const image = document.getElementById('myImg')
     const video = document.getElementById('video')
     video.style.display = 'none'
-    image.src = file.name
-    console.log(file)
     let base64File = await this.getBase64(file)
     let data = await compose(this.callVisionApi, this.createBodyAndKey)(base64File)
+    image.src = base64File
     try {
       let res = this.getResponse(data)
       this.props.setCode(res)
