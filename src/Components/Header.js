@@ -5,7 +5,7 @@ class Header extends Component {
   render () {
     return (
       <header className='header'>
-        Code Exec
+        Snapcode
       </header>
     )
   }

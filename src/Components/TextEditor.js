@@ -10,7 +10,8 @@ class TextEditor extends Component {
       code: this.props.code,
       lang: 'clojure',
       flag: false,
-      result: null
+      result: null,
+      error: null
     }
   }
 
@@ -41,8 +42,10 @@ class TextEditor extends Component {
     .then((results) => results.json())
     .then((data) => {
       console.log(data)
-      if (data.status === 'success'){
+      if (data.status === 'success') {
         this.setState({ flag: true, result: data.result })
+      } else {
+        this.setState({ flag: false, error: data.error })
       }
     })
     .catch(function (error) {
@@ -64,16 +67,12 @@ class TextEditor extends Component {
           <option value='python'>Python</option>
           <option value='clisp'>Lisp</option>
         </select>
-        {/* <DropdownButton bsStyle='Primary' title={this.state.lang} onChange={this.onChangeLanguage.bind(this)}>
-          <MenuItem value='clojure'>Clojure</MenuItem>
-          <MenuItem value='python'>Python</MenuItem>
-          <MenuItem value='clisp'>Lisp</MenuItem>
-        </DropdownButton> */}
         <CodeMirror value={this.state.code} options={options} onBeforeChange={this.onBeforeChange.bind(this)}
           onChange={this.onChange.bind(this)} />
         <Button onClick={this.onSubmit.bind(this)} bsStyle='success'>Evaluate</Button>
         <div className='result'>
           {(this.state.flag) && <div>Result: {this.state.result}</div>}
+          {(!this.state.flag) && <div>{this.state.error}</div>}
         </div>
       </div>
     )
